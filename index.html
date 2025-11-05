@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garcia Tênis - Vitrine Virtual</title>
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --light-text: #ffffff;
+            --accent: #ff2a6d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            background-color: rgba(10,10,10,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0,243,255,0.3);
+        }
+        
+        .search-bar {
+            position: relative;
+        }
+        
+        .search-bar input {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            width: 250px;
+            transition: all 0.3s;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0,243,255,0.3);
+        }
+        
+        .favorites-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--neon-blue);
+            transition: color 0.3s;
+        }
+        
+        .favorites-icon:hover {
+            color: var(--neon-pink);
+        }
+        
+        .favorites-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0,243,255,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0,243,255,0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0,243,255,0.5);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,243,255,0.1) 0%, rgba(10,10,10,0) 70%);
+            z-index: 1;
+        }
+        
+        /* Products Section */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 60px 0 40px;
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            margin: 10px auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,243,255,0.1);
+            border-color: rgba(0,243,255,0.3);
+        }
+        
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--accent));
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .product-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(0,243,255,0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,243,255,0.3);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background-color: rgba(26,26,26,0.5);
+            padding: 60px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 12px 15px;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0,243,255,0.3);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            border: 1px solid rgba(0,243,255,0.3);
+            box-shadow: 0 0 30px rgba(0,243,255,0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--neon-pink);
+        }
+        
+        .favorites-items {
+            margin-bottom: 20px;
+        }
+        
+        .favorites-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .favorites-item-info {
+            flex: 1;
+        }
+        
+        .favorites-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .favorites-item-details {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        .favorites-empty {
+            text-align: center;
+            padding: 30px 0;
+            opacity: 0.7;
+        }
+        
+        .favorites-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        
+        /* Product Detail Modal */
+        .product-modal .modal-content {
+            max-width: 800px;
+        }
+        
+        .product-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .product-detail {
+                flex-direction: row;
+            }
+        }
+        
+        .product-detail-images {
+            flex: 1;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-detail-info {
+            flex: 1;
+        }
+        
+        .product-detail-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .product-detail-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .product-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .product-meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-meta-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        
+        .product-meta-value {
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 60px;
+            opacity: 0.7;
+        }
+        
+        /* Loading */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0,243,255,0.3);
+            border-top: 5px solid var(--neon-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Botão Flutuante */
+        .floating-order-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(0,243,255,0.4);
+            z-index: 99;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .floating-order-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,243,255,0.6);
+        }
+        
+        .floating-order-btn.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .search-bar input {
+                width: 180px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .floating-order-btn {
+                bottom: 20px;
+                left: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Garcia Tênis</div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Pesquisar tênis...">
+                </div>
+                <div class="favorites-icon" id="favoritesIcon">
+                    ❤️
+                    <span class="favorites-count" id="favoritesCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Botão Flutuante -->
+    <a href="#contact" class="floating-order-btn" id="floatingOrderBtn">
+        <span>Fazer seu Pedido</span>
+    </a>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Estilo em Cada Passo</h1>
+                <p class="hero-subtitle">Descubra nossa coleção exclusiva de tênis, onde design moderno encontra conforto extraordinário.</p>
+                <a href="#products" class="btn">Explorar Coleção</a>
+            </div>
+        </div>
+        <div class="hero-bg"></div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section id="products">
+        <div class="container">
+            <h2 class="section-title">Destaques</h2>
+            <div id="featuredProducts" class="products-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- All Products -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Todos os Modelos</h2>
+            <div id="allProducts" class="products-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <h2 class="section-title">Entre em Contato</h2>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="customerName">Seu Nome</label>
+                        <input type="text" id="customerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerMessage">Mensagem (Opcional)</label>
+                        <textarea id="customerMessage" class="form-control" placeholder="Alguma observação sobre os modelos..."></textarea>
+                    </div>
+                    <button type="submit" class="btn">Solicitar Informações via WhatsApp</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Garcia Tênis &copy; 2023 - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Favoritos -->
+    <div id="favoritesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Meus Favoritos</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="favoritesItems" class="favorites-items"></div>
+            <div id="favoritesEmpty" class="favorites-empty">
+                <p>Nenhum modelo favoritado ainda</p>
+            </div>
+            <div class="favorites-total" style="display: none;">
+                <span>Total:</span>
+                <span id="favoritesTotal">0 modelos</span>
+            </div>
+            <div class="favorites-actions" style="display: none;">
+                <button id="sendFavoritesBtn" class="btn" style="width: 100%;">Solicitar Informações via WhatsApp</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Detalhes do Produto -->
+    <div id="productModal" class="modal product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalhes do Modelo</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="product-detail">
+                <div class="product-detail-images">
+                    <div class="main-image">
+                        <img id="modalMainImage" src="" alt="">
+                    </div>
+                </div>
+                <div class="product-detail-info">
+                    <h3 id="modalProductName" class="product-detail-name"></h3>
+                    <p id="modalProductDescription" class="product-detail-description"></p>
+                    
+                    <div class="product-detail-meta">
+                        <div class="product-meta-item">
+                            <span class="product-meta-label">Estilo</span>
+                            <span id="modalProductStyle" class="product-meta-value"></span>
+                        </div>
+                        <div class="product-meta-item">
+                            <span class="product-meta-label">Gênero</span>
+                            <span id="modalProductGender" class="product-meta-value"></span>
+                        </div>
+                        <div class="product-meta-item">
+                            <span class="product-meta-label">Marca</span>
+                            <span id="modalProductBrand" class="product-meta-value"></span>
+                        </div>
+                    </div>
+                    
+                    <button id="addToFavoritesBtn" class="btn add-to-favorites-btn">Adicionar aos Favoritos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos produtos embutidos no HTML
+        const products = [
+    {
+        "id": 1,
+        "nome": "Tênis Nike SB Charge Canvas",
+        "estilo": "Esportivo, Moderno",
+        "descricao": "Domine a rua e a pista com o Nike SB Charge Canvas! Este tênis de cano baixo foi criado para impulsionar seu desempenho no skate, combinando estilo, conforto e durabilidade em cada manobra.",
+        "genero": "Masculino",
+        "marca": "Nike",
+        "imagem": "https://cdn.awsli.com.br/2500x2500/2465/2465900/produto/170667589/42618a1490.jpg",
+        "destaque": true
+    },
+    {
+        "id": 3,
+        "nome": "Ultrarange Rapidweld Black White",
+        "estilo": "Moderno, Urbano",
+        "descricao": "O tênis Vans UltraRange combina o estilo icônico da marca com a tecnologia moderna para garantir conforto e desempenho. Ideal para quem busca um calçado leve e durável para o dia a dia e aventuras urbanas. É o equilíbrio perfeito entre design atemporal e inovação.",
+        "genero": "Masculino",
+        "marca": "Vans",
+        "imagem": "https://images.tcdn.com.br/img/img_prod/1290853/tenis_vans_ultrarange_rapidweld_black_white_37_1_69f01d7ff872573cd879fa9c6eb7adec.jpeg",
+        "destaque": false
+    },
+    {
+        "id": 4,
+        "nome": "Este é um tênis Nike Air Force 1",
+        "estilo": "Esportivo, Confortável",
+        "descricao": "O tênis é conhecido por seu estilo clássico e icônico, com cabedal de couro, entressola de espuma que oferece amortecimento leve e solado de borracha para tração e durabilidade",
+        "genero": "Unissex",
+        "marca": "Nike",
+        "imagem": "https://authenticfeet.vtexassets.com/arquivos/ids/440348-1200-1500?v=638574465527630000&width=1200&height=1500&aspect=true",
+        "destaque": false
+    },
+    {
+        "id": 5,
+        "nome": "Tênis Light Walk",
+        "estilo": "Confortável, Casual",
+        "descricao": "Leve e flexível, ideal para longas caminhadas e uso diário.",
+        "genero": "Masculino",
+        "marca": "Skechers",
+        "imagem": "https://res.cloudinary.com/dvwvwgu29/image/upload/v1762382935/de9772a6-0b43-4ea2-8869-a86f6656fe81_vq2ffl.png",
+        "destaque": false
+    },
+    {
+        "id": 6,
+        "nome": "Adidas Samba",
+        "estilo": "Esportivo, Vintage",
+        "descricao": "O Adidas Samba é mais do que um tênis, é um ícone cultural que transcendeu as quadras de futebol para se tornar um símbolo de estilo atemporal. Com sua silhueta clássica e as icônicas três listras, ele representa a fusão perfeita entre herança esportiva e a elegância urbana, sendo uma escolha versátil que se adapta a qualquer era ou tendência.",
+        "genero": "Unissex",
+        "marca": "Adidas",
+        "imagem": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/4c70105150234ac4b948a8bf01187e0c_9366/Tenis_Samba_OG_Preto_B75807_01_standard.jpg",
+        "destaque": false
+    },
+    {
+        "nome": "Nike Dunk Low (Panda)",
+        "estilo": "Casual, Urbano",
+        "marca": "Nike",
+        "genero": "Unissex",
+        "imagem": "https://imgnike-a.akamaihd.net/1920x1920/017075IDA10.jpg",
+        "descricao": "Um clássico imbatível que combina com tudo. O Nike Dunk Low \"Panda\" eleva qualquer estilo com seu design icônico em preto e branco, unindo a herança do basquete ao streetwear.",
+        "destaque": true,
+        "id": 7
+    },
+    {
+        "nome": "Tênis adidas Superstar Slip-On",
+        "estilo": "Casual Urbano e Sport Casual.",
+        "marca": "Adidas",
+        "genero": "Masculino",
+        "imagem": "https://authenticfeet.vtexassets.com/arquivos/ids/232334-1200-1500?v=638978036676530000&width=1200&height=1500&aspect=true",
+        "descricao": "O clássico que você já ama, reimaginado para o ritmo da cidade. Design sem cadarços com tiras elásticas que se ajustam aos seus pés, combinando o icônico estilo atemporal com o máximo de praticidade e conforto para o dia a dia.",
+        "destaque": false,
+        "id": 8
+    },
+    {
+        "nome": "Nike Air Max 1",
+        "estilo": "casual esportivo",
+        "marca": "Nike",
+        "genero": "Masculino",
+        "imagem": "https://thumblr.uniid.it/product/184644/7de6af3e8124.jpg?width=3840&format=webp&q=75",
+        "descricao": "Evoluído a partir da lenda, o Air Max 90 elevou o amortecimento visível de tecnologia a uma ousada declaração de estilo, moldando a cultura sneaker para sempre.",
+        "destaque": false,
+        "id": 9
+    },
+    {
+        "nome": "Tênis adidas Forum Low",
+        "estilo": "Casual e Retrô",
+        "marca": "Adidas",
+        "genero": "Masculino",
+        "imagem": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/09c5ea6df1bd4be6baaaac5e003e7047_9366/Tenis_Forum_Low_Branco_FY7756_01_00_standard.jpg",
+        "descricao": "Reviva a era de ouro do basquete com o adidas Forum Low. Um ícone das quadras que agora domina as ruas, com seu design atemporal, detalhes em azul vibrante e conforto incomparável. Um tênis que não segue tendências, ele as cria.",
+        "destaque": true,
+        "id": 10
+    },
+    {
+        "nome": "Oakley Halftrack Low",
+        "estilo": "outdoor e atividades de trilha",
+        "marca": "Oakley",
+        "genero": "Masculino",
+        "imagem": "https://static.dafiti.com.br/p/Oakley-T%C3%AAnis-Masculino-Oakley-Bridge-9148-05435941-1-zoom.jpg",
+        "descricao": "Feito para ir mais longe. O Oakley Halftrack Low II oferece a tecnologia e a resistência que você precisa para explorar o mundo, sem abrir mão do estilo robusto e da alta performance.",
+        "destaque": false,
+        "id": 11
+    },
+    {
+        "nome": "Tênis Oakley Halftrack Low II",
+        "estilo": "Robusto e Utilitário",
+        "marca": "Oakley",
+        "genero": "Masculino",
+        "imagem": "https://res.cloudinary.com/dvwvwgu29/image/upload/v1762385405/Sem_t%C3%ADtulo_zmj7wg.jpg",
+        "descricao": "Conheça a fusão perfeita entre a tecnologia militar e o design urbano. Um tênis robusto e versátil, construído com materiais de alta durabilidade e uma entressola para amortecimento superior, ideal para quem busca estilo, conforto e resistência para qualquer terreno.",
+        "destaque": true,
+        "id": 12
+    },
+    {
+        "nome": "Nike ZoomX Invincible Run Flyknit 3",
+        "estilo": "Esportivo Classico",
+        "marca": "Nike",
+        "genero": "Masculino",
+        "imagem": "https://photos.enjoei.com.br/tenis-nike-invincible-3-masculino-109655982/1200xN/czM6Ly9waG90b3MuZW5qb2VpLmNvbS5ici9wcm9kdWN0cy8zMjc5MjYzOS81YjY5OWEzZWQxNzAwMzNmYjg1Yzk3YzA4MjU0MTlkYi5qcGc",
+        "descricao": "O conforto do ouro, a energia para ir além. Sinta a diferença em cada passo.",
+        "destaque": true,
+        "id": 13
+    }
+];
+        
+        // Dados
+        let favorites = JSON.parse(localStorage.getItem('garcia-tenis-favorites')) || [];
+        
+        // Elementos DOM
+        const featuredProductsContainer = document.getElementById('featuredProducts');
+        const allProductsContainer = document.getElementById('allProducts');
+        const favoritesIcon = document.getElementById('favoritesIcon');
+        const favoritesCount = document.getElementById('favoritesCount');
+        const favoritesModal = document.getElementById('favoritesModal');
+        const favoritesItems = document.getElementById('favoritesItems');
+        const favoritesEmpty = document.getElementById('favoritesEmpty');
+        const favoritesTotal = document.getElementById('favoritesTotal');
+        const sendFavoritesBtn = document.getElementById('sendFavoritesBtn');
+        const productModal = document.getElementById('productModal');
+        const searchInput = document.getElementById('searchInput');
+        const contactForm = document.getElementById('contactForm');
+        const floatingOrderBtn = document.getElementById('floatingOrderBtn');
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            updateFavoritesUI();
+            renderProducts();
+            
+            // Event Listeners
+            favoritesIcon.addEventListener('click', () => {
+                favoritesModal.classList.add('show');
+            });
+            
+            sendFavoritesBtn.addEventListener('click', sendFavoritesViaWhatsApp);
+            
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.classList.remove('show');
+                    });
+                });
+            });
+            
+            searchInput.addEventListener('input', (e) => {
+                searchProducts(e.target.value);
+            });
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                sendFavoritesViaWhatsApp();
+            });
+            
+            // Fechar modais ao clicar fora
+            window.addEventListener('click', (e) => {
+                if (e.target === favoritesModal) favoritesModal.classList.remove('show');
+                if (e.target === productModal) productModal.classList.remove('show');
+            });
+            
+            // Controlar visibilidade do botão flutuante
+            window.addEventListener('scroll', toggleFloatingButton);
+            toggleFloatingButton(); // Verificar na inicialização
+        });
+        
+        // Controlar visibilidade do botão flutuante
+        function toggleFloatingButton() {
+            const contactSection = document.getElementById('contact');
+            const contactSectionTop = contactSection.offsetTop;
+            const contactSectionHeight = contactSection.offsetHeight;
+            const scrollPosition = window.scrollY + window.innerHeight;
+            
+            // Se o usuário estiver na seção de contato, esconder o botão
+            if (scrollPosition >= contactSectionTop + 100 && 
+                window.scrollY <= contactSectionTop + contactSectionHeight) {
+                floatingOrderBtn.classList.add('hidden');
+            } else {
+                floatingOrderBtn.classList.remove('hidden');
+            }
+        }
+        
+        // Renderizar produtos na página
+        function renderProducts() {
+            // Limpar containers
+            featuredProductsContainer.innerHTML = '';
+            allProductsContainer.innerHTML = '';
+            
+            // Filtrar produtos em destaque
+            const featuredProducts = products.filter(product => product.destaque);
+            const allProducts = [...products];
+            
+            // Renderizar produtos em destaque
+            if (featuredProducts.length > 0) {
+                featuredProducts.forEach(product => {
+                    const productCard = createProductCard(product);
+                    featuredProductsContainer.appendChild(productCard);
+                });
+            } else {
+                featuredProductsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; opacity: 0.7;">Nenhum produto em destaque no momento.</p>';
+            }
+            
+            // Renderizar todos os produtos
+            if (allProducts.length > 0) {
+                allProducts.forEach(product => {
+                    const productCard = createProductCard(product);
+                    allProductsContainer.appendChild(productCard);
+                });
+            } else {
+                allProductsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; opacity: 0.7;">Nenhum produto disponível no momento.</p>';
+            }
+            
+            // Adicionar eventos aos cards
+            addProductCardEvents();
+        }
+        
+        // Criar card de produto
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.imagem}" alt="${product.nome}" onerror="this.src='https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Imagem+Não+Disponível'">
+                    ${product.destaque ? '<div class="product-badge">Destaque</div>' : ''}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.nome}</h3>
+                    <div class="product-details">
+                        <p><strong>Estilo:</strong> ${product.estilo}</p>
+                        <p><strong>Gênero:</strong> ${product.genero}</p>
+                        <p><strong>Marca:</strong> ${product.marca}</p>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-outline view-details-btn" data-id="${product.id}">Ver Detalhes</button>
+                        <button class="btn-primary add-to-favorites-btn" data-id="${product.id}">❤️ Favoritar</button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Adicionar eventos aos cards de produto
+        function addProductCardEvents() {
+            // Botões "Ver Detalhes"
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.dataset.id);
+                    openProductModal(productId);
+                });
+            });
+            
+            // Botões "Adicionar aos Favoritos"
+            document.querySelectorAll('.add-to-favorites-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.dataset.id);
+                    addToFavorites(productId);
+                    
+                    // Feedback visual
+                    const originalText = e.target.textContent;
+                    e.target.textContent = '❤️ Adicionado!';
+                    setTimeout(() => {
+                        e.target.textContent = originalText;
+                    }, 1500);
+                });
+            });
+        }
+        
+        // Abrir modal de detalhes do produto
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            document.getElementById('modalMainImage').src = product.imagem;
+            document.getElementById('modalProductName').textContent = product.nome;
+            document.getElementById('modalProductDescription').textContent = product.descricao;
+            document.getElementById('modalProductStyle').textContent = product.estilo;
+            document.getElementById('modalProductGender').textContent = product.genero;
+            document.getElementById('modalProductBrand').textContent = product.marca;
+            
+            // Atualizar o botão de favoritos
+            const addToFavoritesBtn = document.getElementById('addToFavoritesBtn');
+            const isInFavorites = favorites.some(item => item.id === productId);
+            addToFavoritesBtn.textContent = isInFavorites ? '❤️ Remover dos Favoritos' : '❤️ Adicionar aos Favoritos';
+            addToFavoritesBtn.onclick = () => {
+                if (isInFavorites) {
+                    removeFromFavorites(productId);
+                } else {
+                    addToFavorites(productId);
+                }
+                productModal.classList.remove('show');
+            };
+            
+            productModal.classList.add('show');
+        }
+        
+        // Adicionar produto aos favoritos
+        function addToFavorites(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Verificar se já está nos favoritos
+            if (favorites.some(item => item.id === productId)) {
+                return;
+            }
+            
+            favorites.push(product);
+            localStorage.setItem('garcia-tenis-favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+        
+        // Remover produto dos favoritos
+        function removeFromFavorites(productId) {
+            favorites = favorites.filter(item => item.id !== productId);
+            localStorage.setItem('garcia-tenis-favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+        
+        // Atualizar interface dos favoritos
+        function updateFavoritesUI() {
+            // Atualizar contador
+            favoritesCount.textContent = favorites.length;
+            
+            // Atualizar modal de favoritos
+            favoritesItems.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                favoritesEmpty.style.display = 'block';
+                document.querySelector('.favorites-total').style.display = 'none';
+                document.querySelector('.favorites-actions').style.display = 'none';
+            } else {
+                favoritesEmpty.style.display = 'none';
+                document.querySelector('.favorites-total').style.display = 'flex';
+                document.querySelector('.favorites-actions').style.display = 'block';
+                
+                favorites.forEach(product => {
+                    const item = document.createElement('div');
+                    item.className = 'favorites-item';
+                    item.innerHTML = `
+                        <div class="favorites-item-info">
+                            <div class="favorites-item-name">${product.nome}</div>
+                            <div class="favorites-item-details">${product.marca} • ${product.genero}</div>
+                        </div>
+                        <button class="remove-item" data-id="${product.id}">Remover</button>
+                    `;
+                    favoritesItems.appendChild(item);
+                });
+                
+                favoritesTotal.textContent = `${favorites.length} modelo(s)`;
+                
+                // Adicionar eventos aos botões de remover
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.dataset.id);
+                        removeFromFavorites(productId);
+                    });
+                });
+            }
+        }
+        
+        // Enviar favoritos via WhatsApp
+        function sendFavoritesViaWhatsApp() {
+            if (favorites.length === 0) {
+                alert('Adicione pelo menos um modelo aos favoritos antes de enviar.');
+                return;
+            }
+            
+            const customerName = document.getElementById('customerName').value;
+            const customerMessage = document.getElementById('customerMessage').value;
+            
+            if (!customerName) {
+                alert('Por favor, informe seu nome.');
+                return;
+            }
+            
+            let message = `Olá, me chamo ${customerName}. Gostei deste(s) modelo(s), você teria mais informações?\n\n`;
+            
+            favorites.forEach((product, index) => {
+                message += `${index + 1}. ${product.nome} (${product.marca}) - ${product.genero}\n`;
+                message += `   Estilo: ${product.estilo}\n`;
+                message += `   Descrição: ${product.descricao}\n\n`;
+            });
+            
+            if (customerMessage) {
+                message += `Observação: ${customerMessage}\n\n`;
+            }
+            
+            message += 'Aguardo seu retorno. Obrigado!';
+            
+            // Codificar a mensagem para URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Número de WhatsApp (substitua pelo número desejado)
+            const phoneNumber = "554498933551";
+            
+            // Criar o link do WhatsApp
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Abrir o WhatsApp em uma nova aba
+            window.open(whatsappURL, '_blank');
+            
+            // Fechar o modal
+            favoritesModal.classList.remove('show');
+        }
+        
+        // Pesquisar produtos
+        function searchProducts(query) {
+            if (!query.trim()) {
+                renderProducts();
+                return;
+            }
+            
+            const filteredProducts = products.filter(product => 
+                product.nome.toLowerCase().includes(query.toLowerCase()) ||
+                product.marca.toLowerCase().includes(query.toLowerCase()) ||
+                product.estilo.toLowerCase().includes(query.toLowerCase()) ||
+                product.genero.toLowerCase().includes(query.toLowerCase()) ||
+                product.descricao.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            // Atualizar a exibição
+            featuredProductsContainer.innerHTML = '';
+            allProductsContainer.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                allProductsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; opacity: 0.7;">Nenhum produto encontrado para "' + query + '".</p>';
+                return;
+            }
+            
+            filteredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                allProductsContainer.appendChild(productCard);
+            });
+            
+            // Adicionar eventos aos novos cards
+            addProductCardEvents();
+        }
+    </script>
+</body>
+</html>
