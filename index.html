@@ -64,6 +64,12 @@
             text-shadow: 0 0 10px rgba(0,243,255,0.3);
         }
         
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
         .search-bar {
             position: relative;
         }
@@ -80,6 +86,21 @@
         
         .search-bar input:focus {
             outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0,243,255,0.3);
+        }
+        
+        .filters-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filters-btn:hover {
             border-color: var(--neon-blue);
             box-shadow: 0 0 10px rgba(0,243,255,0.3);
         }
@@ -110,6 +131,52 @@
             justify-content: center;
             font-size: 12px;
             font-weight: bold;
+        }
+        
+        /* Filtros */
+        .filters-panel {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: none;
+        }
+        
+        .filters-panel.show {
+            display: block;
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--neon-blue);
+        }
+        
+        .filter-select {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 8px 12px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
         
         /* Hero Section */
@@ -261,6 +328,43 @@
             font-size: 0.9rem;
             opacity: 0.8;
             margin-bottom: 15px;
+        }
+        
+        .product-sizes {
+            margin-bottom: 15px;
+        }
+        
+        .sizes-label {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--neon-blue);
+        }
+        
+        .sizes-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .size-option {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .size-option:hover {
+            background: rgba(0,243,255,0.2);
+            border-color: var(--neon-blue);
+        }
+        
+        .size-option.selected {
+            background: var(--neon-blue);
+            color: var(--dark-bg);
+            border-color: var(--neon-blue);
         }
         
         .product-actions {
@@ -431,6 +535,12 @@
         .favorites-item-details {
             font-size: 0.9rem;
             opacity: 0.7;
+        }
+        
+        .favorites-item-size {
+            font-size: 0.8rem;
+            color: var(--neon-blue);
+            margin-top: 5px;
         }
         
         .remove-item {
@@ -607,6 +717,11 @@
                 gap: 15px;
             }
             
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
             .floating-order-btn {
                 bottom: 20px;
                 left: 20px;
@@ -622,16 +737,70 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">Garcia Tênis</div>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Pesquisar tênis...">
-                </div>
-                <div class="favorites-icon" id="favoritesIcon">
-                    ❤️
-                    <span class="favorites-count" id="favoritesCount">0</span>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Pesquisar tênis...">
+                    </div>
+                    <button class="filters-btn" id="filtersBtn">🔍 Filtros</button>
+                    <div class="favorites-icon" id="favoritesIcon">
+                        ❤️
+                        <span class="favorites-count" id="favoritesCount">0</span>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+    
+    <!-- Filtros -->
+    <div class="container">
+        <div class="filters-panel" id="filtersPanel">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Gênero</label>
+                    <select class="filter-select" id="filterGender">
+                        <option value="">Todos</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Unissex">Unissex</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Estilo</label>
+                    <select class="filter-select" id="filterStyle">
+                        <option value="">Todos</option>
+                        <option value="Esportivo">Esportivo</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Urbano">Urbano</option>
+                        <option value="Moderno">Moderno</option>
+                        <option value="Retrô">Retrô</option>
+                        <option value="Robusto">Robusto</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Marca</label>
+                    <select class="filter-select" id="filterBrand">
+                        <option value="">Todas</option>
+                        <option value="Nike">Nike</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Vans">Vans</option>
+                        <option value="Oakley">Oakley</option>
+                        <option value="Skechers">Skechers</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Destaque</label>
+                    <select class="filter-select" id="filterFeatured">
+                        <option value="">Todos</option>
+                        <option value="destaque">Apenas Destaques</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn" id="applyFilters">Aplicar Filtros</button>
+                <button class="btn-outline" id="clearFilters">Limpar Filtros</button>
+            </div>
+        </div>
+    </div>
     
     <!-- Botão Flutuante -->
     <a href="#contact" class="floating-order-btn" id="floatingOrderBtn">
@@ -739,6 +908,11 @@
                     <h3 id="modalProductName" class="product-detail-name"></h3>
                     <p id="modalProductDescription" class="product-detail-description"></p>
                     
+                    <div class="product-sizes">
+                        <div class="sizes-label">Selecione o tamanho:</div>
+                        <div class="sizes-grid" id="modalSizesGrid"></div>
+                    </div>
+                    
                     <div class="product-detail-meta">
                         <div class="product-meta-item">
                             <span class="product-meta-label">Estilo</span>
@@ -771,7 +945,9 @@
         "genero": "Masculino",
         "marca": "Nike",
         "imagem": "https://cdn.awsli.com.br/2500x2500/2465/2465900/produto/170667589/42618a1490.jpg",
-        "destaque": false
+        "destaque": false,
+        "numeracao": "36,37,38,39,40,41,42,43",
+        "propaganda": false
     },
     {
         "id": 3,
@@ -781,7 +957,9 @@
         "genero": "Masculino",
         "marca": "Vans",
         "imagem": "https://images.tcdn.com.br/img/img_prod/1290853/tenis_vans_ultrarange_rapidweld_black_white_37_1_69f01d7ff872573cd879fa9c6eb7adec.jpeg",
-        "destaque": false
+        "destaque": false,
+        "numeracao": "38,39,40,41,42,43,44",
+        "propaganda": true
     },
     {
         "id": 4,
@@ -791,7 +969,9 @@
         "genero": "Unissex",
         "marca": "Nike",
         "imagem": "https://authenticfeet.vtexassets.com/arquivos/ids/440348-1200-1500?v=638574465527630000&width=1200&height=1500&aspect=true",
-        "destaque": false
+        "destaque": false,
+        "numeracao": "34,35,36,37,38,39,40,41,42,43,44",
+        "propaganda": false
     },
     {
         "id": 5,
@@ -799,9 +979,11 @@
         "estilo": "Confortável, Casual",
         "descricao": "Leve e flexível, ideal para longas caminhadas e uso diário.",
         "genero": "Masculino",
-        "marca": "Skechers",
+        "marca": "Adidas",
         "imagem": "https://res.cloudinary.com/dvwvwgu29/image/upload/v1762382935/de9772a6-0b43-4ea2-8869-a86f6656fe81_vq2ffl.png",
-        "destaque": false
+        "destaque": false,
+        "numeracao": "39,40,41,42,43",
+        "propaganda": false
     },
     {
         "id": 6,
@@ -811,7 +993,9 @@
         "genero": "Unissex",
         "marca": "Adidas",
         "imagem": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/4c70105150234ac4b948a8bf01187e0c_9366/Tenis_Samba_OG_Preto_B75807_01_standard.jpg",
-        "destaque": false
+        "destaque": false,
+        "numeracao": "36,37,38,39,40,41,42",
+        "propaganda": true
     },
     {
         "nome": "Nike Dunk Low (Panda)",
@@ -821,7 +1005,9 @@
         "imagem": "https://imgnike-a.akamaihd.net/1920x1920/017075IDA10.jpg",
         "descricao": "Um clássico imbatível que combina com tudo. O Nike Dunk Low \"Panda\" eleva qualquer estilo com seu design icônico em preto e branco, unindo a herança do basquete ao streetwear.",
         "destaque": true,
-        "id": 7
+        "id": 7,
+        "numeracao": "35,36,37,38,39,40,41,42,43",
+        "propaganda": false
     },
     {
         "nome": "Adidas Superstar Slip-On",
@@ -831,7 +1017,9 @@
         "imagem": "https://authenticfeet.vtexassets.com/arquivos/ids/232334-1200-1500?v=638978036676530000&width=1200&height=1500&aspect=true",
         "descricao": "O clássico que você já ama, reimaginado para o ritmo da cidade. Design sem cadarços com tiras elásticas que se ajustam aos seus pés, combinando o icônico estilo atemporal com o máximo de praticidade e conforto para o dia a dia.",
         "destaque": false,
-        "id": 8
+        "id": 8,
+        "numeracao": "34,35,36,37,38,39",
+        "propaganda": false
     },
     {
         "nome": "Nike Air Max 1",
@@ -841,7 +1029,9 @@
         "imagem": "https://thumblr.uniid.it/product/184644/7de6af3e8124.jpg?width=3840&format=webp&q=75",
         "descricao": "Evoluído a partir da lenda, o Air Max 90 elevou o amortecimento visível de tecnologia a uma ousada declaração de estilo, moldando a cultura sneaker para sempre.",
         "destaque": false,
-        "id": 9
+        "id": 9,
+        "numeracao": "39,40,41,42,43,44",
+        "propaganda": true
     },
     {
         "nome": "Adidas Forum Low",
@@ -851,7 +1041,9 @@
         "imagem": "https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/09c5ea6df1bd4be6baaaac5e003e7047_9366/Tenis_Forum_Low_Branco_FY7756_01_00_standard.jpg",
         "descricao": "Reviva a era de ouro do basquete com o adidas Forum Low. Um ícone das quadras que agora domina as ruas, com seu design atemporal, detalhes em azul vibrante e conforto incomparável. Um tênis que não segue tendências, ele as cria.",
         "destaque": true,
-        "id": 10
+        "id": 10,
+        "numeracao": "38,39,40,41,42,43",
+        "propaganda": false
     },
     {
         "nome": "Oakley Halftrack Low",
@@ -861,7 +1053,9 @@
         "imagem": "https://static.dafiti.com.br/p/Oakley-T%C3%AAnis-Masculino-Oakley-Bridge-9148-05435941-1-zoom.jpg",
         "descricao": "Feito para ir mais longe. O Oakley Halftrack Low II oferece a tecnologia e a resistência que você precisa para explorar o mundo, sem abrir mão do estilo robusto e da alta performance.",
         "destaque": false,
-        "id": 11
+        "id": 11,
+        "numeracao": "40,41,42,43,44",
+        "propaganda": false
     },
     {
         "nome": "Oakley Halftrack Low II",
@@ -871,7 +1065,9 @@
         "imagem": "https://res.cloudinary.com/dvwvwgu29/image/upload/v1762385405/Sem_t%C3%ADtulo_zmj7wg.jpg",
         "descricao": "Conheça a fusão perfeita entre a tecnologia militar e o design urbano. Um tênis robusto e versátil, construído com materiais de alta durabilidade e uma entressola para amortecimento superior, ideal para quem busca estilo, conforto e resistência para qualquer terreno.",
         "destaque": true,
-        "id": 12
+        "id": 12,
+        "numeracao": "39,40,41,42,43,44",
+        "propaganda": true
     },
     {
         "nome": "Nike ZoomX Invincible Run Flyknit 3",
@@ -881,7 +1077,9 @@
         "imagem": "https://photos.enjoei.com.br/tenis-nike-invincible-3-masculino-109655982/1200xN/czM6Ly9waG90b3MuZW5qb2VpLmNvbS5ici9wcm9kdWN0cy8zMjc5MjYzOS81YjY5OWEzZWQxNzAwMzNmYjg1Yzk3YzA4MjU0MTlkYi5qcGc",
         "descricao": "O conforto do ouro, a energia para ir além. Sinta a diferença em cada passo.",
         "destaque": true,
-        "id": 13
+        "id": 13,
+        "numeracao": "38,39,40,41,42,43,44",
+        "propaganda": false
     },
     {
         "nome": "VANS ULTRARANGE",
@@ -891,7 +1089,9 @@
         "imagem": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTSOlz70zb7MI9G68JGmNPqoizUS6t3bx1-0gKhvd0ZUgB5EXkX0t_Zsy7iud0Uyapo1ZfZqa3zos0inLkhQNGhlyjlQmlItlsjo_vASXnF1fjAwGePI11a",
         "descricao": "O Tênis Vans Ultrarange Exo Black é um modelo de alta performance e estilo, projetado para oferecer conforto e suporte. Ele conta com a tecnologia UltraCush™ Lite e a sola Waffle invertida para amortecimento e aderência, sendo ideal para o dia a dia e aventuras.",
         "destaque": false,
-        "id": 14
+        "id": 14,
+        "numeracao": "37,38,39,40,41,42,43",
+        "propaganda": false
     },
     {
         "nome": "AIR FORCE LINHA PREMIUM ",
@@ -901,12 +1101,32 @@
         "imagem": "https://guepardoshoes.com.br/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-13-at-10.17.03-scaled.jpeg",
         "descricao": "O tênis Nike Air Force 1 é um clássico atemporal que combina estilo e conforto. Este modelo, em particular, apresenta um design em off-white e rosa, oferecendo um visual delicado e moderno. Com o icônico \"swoosh\" da Nike e a inscrição \"AIR\" na sola, o tênis é versátil e perfeito para complementar diversos looks do dia a dia.",
         "destaque": true,
-        "id": 15
+        "id": 15,
+        "numeracao": "34,35,36,37,38,39,40",
+        "propaganda": true
+    },
+    {
+        "nome": "Nike ZoomX Invincible Run Flyknit",
+        "estilo": "Casual",
+        "marca": "Nike",
+        "genero": "Masculino",
+        "imagem": "https://m.media-amazon.com/images/I/813i7dciwDL._AC_SX575_.jpg",
+        "numeracao": "36,37,38,39,40,41,42,43",
+        "descricao": "máximo amortecimento, leveza e retorno de energia para corridas mais seguras e potentes.",
+        "destaque": true,
+        "propaganda": false,
+        "id": 16
     }
 ];
         
         // Dados
         let favorites = JSON.parse(localStorage.getItem('garcia-tenis-favorites')) || [];
+        let currentFilters = {
+            gender: '',
+            style: '',
+            brand: '',
+            featured: ''
+        };
         
         // Elementos DOM
         const featuredProductsContainer = document.getElementById('featuredProducts');
@@ -922,6 +1142,10 @@
         const searchInput = document.getElementById('searchInput');
         const contactForm = document.getElementById('contactForm');
         const floatingOrderBtn = document.getElementById('floatingOrderBtn');
+        const filtersBtn = document.getElementById('filtersBtn');
+        const filtersPanel = document.getElementById('filtersPanel');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const clearFiltersBtn = document.getElementById('clearFilters');
         
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
@@ -952,10 +1176,19 @@
                 sendFavoritesViaWhatsApp();
             });
             
+            // Filtros
+            filtersBtn.addEventListener('click', () => {
+                filtersPanel.classList.toggle('show');
+            });
+            
+            applyFiltersBtn.addEventListener('click', applyFilters);
+            clearFiltersBtn.addEventListener('click', clearFilters);
+            
             // Fechar modais ao clicar fora
             window.addEventListener('click', (e) => {
                 if (e.target === favoritesModal) favoritesModal.classList.remove('show');
                 if (e.target === productModal) productModal.classList.remove('show');
+                if (e.target === filtersPanel) filtersPanel.classList.remove('show');
             });
             
             // Controlar visibilidade do botão flutuante
@@ -981,16 +1214,16 @@
         
         // Renderizar produtos na página
         function renderProducts() {
-            // Limpar containers
-            featuredProductsContainer.innerHTML = '';
-            allProductsContainer.innerHTML = '';
+            // Embaralhar produtos (exceto os em destaque)
+            const shuffledProducts = shuffleArray([...products]);
             
-            // Filtrar produtos em destaque
+            // Filtrar produtos em destaque (mantém ordem original para destaques)
             const featuredProducts = products.filter(product => product.destaque);
-            const allProducts = [...products];
+            const allProducts = [...shuffledProducts];
             
             // Renderizar produtos em destaque
             if (featuredProducts.length > 0) {
+                featuredProductsContainer.innerHTML = '';
                 featuredProducts.forEach(product => {
                     const productCard = createProductCard(product);
                     featuredProductsContainer.appendChild(productCard);
@@ -1001,6 +1234,7 @@
             
             // Renderizar todos os produtos
             if (allProducts.length > 0) {
+                allProductsContainer.innerHTML = '';
                 allProducts.forEach(product => {
                     const productCard = createProductCard(product);
                     allProductsContainer.appendChild(productCard);
@@ -1013,14 +1247,32 @@
             addProductCardEvents();
         }
         
+        // Embaralhar array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+        
         // Criar card de produto
         function createProductCard(product) {
             const card = document.createElement('div');
             card.className = 'product-card';
+            
+            // Gerar grade de tamanhos
+            const sizes = product.numeracao ? product.numeracao.split(',') : [];
+            const sizesGrid = sizes.map(size => 
+                `<div class="size-option" data-size="${size}">${size}</div>`
+            ).join('');
+            
             card.innerHTML = `
                 <div class="product-image">
                     <img src="${product.imagem}" alt="${product.nome}" onerror="this.src='https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Imagem+Não+Disponível'">
                     ${product.destaque ? '<div class="product-badge">Destaque</div>' : ''}
+                    ${product.propaganda ? '<div class="product-badge" style="background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));">Promoção</div>' : ''}
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${product.nome}</h3>
@@ -1028,6 +1280,12 @@
                         <p><strong>Estilo:</strong> ${product.estilo}</p>
                         <p><strong>Gênero:</strong> ${product.genero}</p>
                         <p><strong>Marca:</strong> ${product.marca}</p>
+                    </div>
+                    <div class="product-sizes">
+                        <div class="sizes-label">Tamanhos disponíveis:</div>
+                        <div class="sizes-grid">
+                            ${sizesGrid}
+                        </div>
                     </div>
                     <div class="product-actions">
                         <button class="btn-outline view-details-btn" data-id="${product.id}">Ver Detalhes</button>
@@ -1053,7 +1311,15 @@
             document.querySelectorAll('.add-to-favorites-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const productId = parseInt(e.target.dataset.id);
-                    addToFavorites(productId);
+                    const productCard = e.target.closest('.product-card');
+                    const selectedSize = productCard.querySelector('.size-option.selected');
+                    
+                    if (!selectedSize) {
+                        alert('Por favor, selecione um tamanho antes de favoritar.');
+                        return;
+                    }
+                    
+                    addToFavorites(productId, selectedSize.dataset.size);
                     
                     // Feedback visual
                     const originalText = e.target.textContent;
@@ -1061,6 +1327,17 @@
                     setTimeout(() => {
                         e.target.textContent = originalText;
                     }, 1500);
+                });
+            });
+            
+            // Seleção de tamanhos
+            document.querySelectorAll('.size-option').forEach(sizeOption => {
+                sizeOption.addEventListener('click', (e) => {
+                    const productCard = e.target.closest('.product-card');
+                    productCard.querySelectorAll('.size-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    e.target.classList.add('selected');
                 });
             });
         }
@@ -1077,15 +1354,39 @@
             document.getElementById('modalProductGender').textContent = product.genero;
             document.getElementById('modalProductBrand').textContent = product.marca;
             
+            // Gerar grade de tamanhos no modal
+            const sizesGrid = document.getElementById('modalSizesGrid');
+            sizesGrid.innerHTML = '';
+            const sizes = product.numeracao ? product.numeracao.split(',') : [];
+            sizes.forEach(size => {
+                const sizeOption = document.createElement('div');
+                sizeOption.className = 'size-option';
+                sizeOption.textContent = size;
+                sizeOption.dataset.size = size;
+                sizeOption.addEventListener('click', function() {
+                    sizesGrid.querySelectorAll('.size-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+                sizesGrid.appendChild(sizeOption);
+            });
+            
             // Atualizar o botão de favoritos
             const addToFavoritesBtn = document.getElementById('addToFavoritesBtn');
             const isInFavorites = favorites.some(item => item.id === productId);
             addToFavoritesBtn.textContent = isInFavorites ? '❤️ Remover dos Favoritos' : '❤️ Adicionar aos Favoritos';
             addToFavoritesBtn.onclick = () => {
+                const selectedSize = sizesGrid.querySelector('.size-option.selected');
+                if (!selectedSize && !isInFavorites) {
+                    alert('Por favor, selecione um tamanho antes de favoritar.');
+                    return;
+                }
+                
                 if (isInFavorites) {
                     removeFromFavorites(productId);
                 } else {
-                    addToFavorites(productId);
+                    addToFavorites(productId, selectedSize.dataset.size);
                 }
                 productModal.classList.remove('show');
             };
@@ -1094,16 +1395,25 @@
         }
         
         // Adicionar produto aos favoritos
-        function addToFavorites(productId) {
+        function addToFavorites(productId, size) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
             
             // Verificar se já está nos favoritos
-            if (favorites.some(item => item.id === productId)) {
-                return;
+            const existingIndex = favorites.findIndex(item => item.id === productId);
+            
+            if (existingIndex !== -1) {
+                // Atualizar tamanho se já estiver nos favoritos
+                favorites[existingIndex].selectedSize = size;
+            } else {
+                // Adicionar novo favorito
+                const favoriteProduct = {
+                    ...product,
+                    selectedSize: size
+                };
+                favorites.push(favoriteProduct);
             }
             
-            favorites.push(product);
             localStorage.setItem('garcia-tenis-favorites', JSON.stringify(favorites));
             updateFavoritesUI();
         }
@@ -1139,6 +1449,7 @@
                         <div class="favorites-item-info">
                             <div class="favorites-item-name">${product.nome}</div>
                             <div class="favorites-item-details">${product.marca} • ${product.genero}</div>
+                            <div class="favorites-item-size">Tamanho: ${product.selectedSize}</div>
                         </div>
                         <button class="remove-item" data-id="${product.id}">Remover</button>
                     `;
@@ -1175,13 +1486,11 @@
             let message = `Olá, me chamo ${customerName}. Gostei deste(s) modelo(s), você teria mais informações?\n\n`;
             
             favorites.forEach((product, index) => {
-                message += `${index + 1}. ${product.nome} (${product.marca}) - ${product.genero}\n`;
-                message += `   Estilo: ${product.estilo}\n`;
-                message += `   Descrição: ${product.descricao}\n\n`;
+                message += `${index + 1}. ${product.nome} (${product.marca}) - Tamanho: ${product.selectedSize}\n`;
             });
             
             if (customerMessage) {
-                message += `Observação: ${customerMessage}\n\n`;
+                message += `\nObservação: ${customerMessage}\n\n`;
             }
             
             message += 'Aguardo seu retorno. Obrigado!';
@@ -1200,6 +1509,79 @@
             
             // Fechar o modal
             favoritesModal.classList.remove('show');
+        }
+        
+        // Aplicar filtros
+        function applyFilters() {
+            const gender = document.getElementById('filterGender').value;
+            const style = document.getElementById('filterStyle').value;
+            const brand = document.getElementById('filterBrand').value;
+            const featured = document.getElementById('filterFeatured').value;
+            
+            currentFilters = { gender, style, brand, featured };
+            
+            let filteredProducts = [...products];
+            
+            // Aplicar filtros
+            if (gender) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.genero === gender
+                );
+            }
+            
+            if (style) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.estilo.toLowerCase().includes(style.toLowerCase())
+                );
+            }
+            
+            if (brand) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.marca === brand
+                );
+            }
+            
+            if (featured === 'destaque') {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.destaque
+                );
+            }
+            
+            // Atualizar exibição
+            allProductsContainer.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                allProductsContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; opacity: 0.7;">Nenhum produto encontrado com os filtros selecionados.</p>';
+            } else {
+                filteredProducts.forEach(product => {
+                    const productCard = createProductCard(product);
+                    allProductsContainer.appendChild(productCard);
+                });
+                
+                // Adicionar eventos aos novos cards
+                addProductCardEvents();
+            }
+            
+            // Fechar painel de filtros
+            filtersPanel.classList.remove('show');
+        }
+        
+        // Limpar filtros
+        function clearFilters() {
+            document.getElementById('filterGender').value = '';
+            document.getElementById('filterStyle').value = '';
+            document.getElementById('filterBrand').value = '';
+            document.getElementById('filterFeatured').value = '';
+            
+            currentFilters = {
+                gender: '',
+                style: '',
+                brand: '',
+                featured: ''
+            };
+            
+            renderProducts();
+            filtersPanel.classList.remove('show');
         }
         
         // Pesquisar produtos
